@@ -5,7 +5,4 @@ __pycache__/
 venv/
 .env
 
-models/
-outputs/
-
 .DS_Store
