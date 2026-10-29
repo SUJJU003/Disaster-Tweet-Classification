@@ -121,3 +121,28 @@ The training dataset contains labeled tweets, while the test dataset is used to 
 - Analyze misclassified tweets using a confusion matrix.
 - Compare DistilBERT with other transformer models.
 - Improve reproducibility and document the experimental setup.
+
+## Project Architecture
+
+The project compares a traditional machine learning pipeline with a transformer-based NLP pipeline for disaster tweet classification.
+
+```mermaid
+flowchart TD
+    A["Kaggle Disaster Tweets Dataset"] --> B["Text Input"]
+    B --> C["TF-IDF Vectorization"]
+    B --> D["DistilBERT Tokenization"]
+    C --> E["Logistic Regression"]
+    D --> F["Fine-tuned DistilBERT"]
+    E --> G["Binary Classification"]
+    F --> G
+    G --> H["Evaluation: Accuracy, Precision, Recall, F1"]
+    H --> I["Kaggle Submission"]
+```
+
+### Workflow Explanation
+
+1. **Dataset:** Load the labeled training tweets and unlabeled test tweets.
+2. **Text preparation:** Prepare the text for each model's input requirements.
+3. **Model training:** Train TF-IDF with Logistic Regression and fine-tune DistilBERT.
+4. **Evaluation:** Compare predictions using accuracy, precision, recall, and F1 score.
+5. **Submission:** Generate binary predictions for the Kaggle test dataset.
