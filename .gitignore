@@ -6,3 +6,39 @@ venv/
 .env
 
 .DS_Store
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Local environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Dataset files
+data/*.csv
+
+# Model checkpoints and weights
+models/
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Training outputs
+distilbert_results/
+runs/
+wandb/
+
+# OS files
+.DS_Store
+Thumbs.db
