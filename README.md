@@ -47,6 +47,22 @@ DistilBERT improved the Kaggle score by 0.02819 compared with the best TF-IDF su
 
 *Note: Validation metrics and Kaggle public scores come from different evaluation sets and should be interpreted separately.*
 
+## Model Evaluation
+
+### Confusion Matrix
+
+The confusion matrix shows how effectively DistilBERT distinguishes real disaster tweets from non-disaster tweets on the validation set.
+
+![DistilBERT Confusion Matrix](images/confusion_matrix.png)
+
+### Classification Report
+
+The classification report evaluates the model using precision, recall, and F1 score for both classes.
+
+The model achieved a validation F1 score of **0.8129** and a Kaggle public score of **0.83266**.
+
+The validation results are used to assess model performance before submission, while the Kaggle score measures performance on the competition's evaluation data.
+
 ## Technologies Used
 
 - Python
