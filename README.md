@@ -34,6 +34,13 @@ The project compares a traditional machine learning approach using TF-IDF and Lo
 | Tuned TF-IDF + Logistic Regression | 0.7793 | 0.80447 |
 | DistilBERT | 0.8129 | 0.83266 |
 
+## Model Comparison
+
+The following graph compares the public Kaggle F1 scores of the
+baseline TF-IDF model, tuned TF-IDF model, and DistilBERT.
+
+![Model Comparison](images/model_comparison.png)
+
 **Best model:** DistilBERT, with a Kaggle public score of **0.83266**.
 
 DistilBERT improved the Kaggle score by 0.02819 compared with the best TF-IDF submission.
