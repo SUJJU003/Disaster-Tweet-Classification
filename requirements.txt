@@ -6,6 +6,9 @@ scikit-learn
 nltk
 spacy
 tensorflow
+torch
 transformers
+datasets
+accelerate
 jupyter
 wordcloud
