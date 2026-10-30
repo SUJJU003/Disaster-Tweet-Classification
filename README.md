@@ -126,23 +126,32 @@ The training dataset contains labeled tweets, while the test dataset is used to 
 
 The project compares a traditional machine learning pipeline with a transformer-based NLP pipeline for disaster tweet classification.
 
+Approach 1: Traditional Machine Learning
 ```mermaid
 flowchart TD
-    A["Kaggle Disaster Tweets Dataset"] --> B["Text Input"]
+    A["Disaster Tweets Dataset"] --> B["Text Preprocessing"]
     B --> C["TF-IDF Vectorization"]
-    B --> D["DistilBERT Tokenization"]
-    C --> E["Logistic Regression"]
-    D --> F["Fine-tuned DistilBERT"]
-    E --> G["Binary Classification"]
-    F --> G
-    G --> H["Evaluation: Accuracy, Precision, Recall, F1"]
-    H --> I["Kaggle Submission"]
+    C --> D["Logistic Regression"]
+    D --> E["Binary Classification"]
+    E --> F["Prediction: 0 or 1"]
+```
+
+Approach 2: Transformer-Based Deep Learning
+```mermaid
+flowchart TD
+    A["Disaster Tweets Dataset"] --> B["Original Tweet Text"]
+    B --> C["DistilBERT Tokenizer"]
+    C --> D["Pretrained DistilBERT"]
+    D --> E["Fine-Tuning"]
+    E --> F["Binary Classification"]
+    F --> G["Prediction: 0 or 1"]
 ```
 
 ### Workflow Explanation
 
-1. **Dataset:** Load the labeled training tweets and unlabeled test tweets.
-2. **Text preparation:** Prepare the text for each model's input requirements.
-3. **Model training:** Train TF-IDF with Logistic Regression and fine-tune DistilBERT.
-4. **Evaluation:** Compare predictions using accuracy, precision, recall, and F1 score.
-5. **Submission:** Generate binary predictions for the Kaggle test dataset.
+Dataset Preparation: Load the Kaggle disaster tweet dataset.
+Traditional ML Pipeline: Apply text preprocessing, TF-IDF vectorization, and Logistic Regression.
+Transformer Pipeline: Tokenize the original tweets and fine-tune pretrained DistilBERT.
+Independent Predictions: Each model generates its own binary classification predictions.
+Comparative Evaluation: Compare both approaches using accuracy, precision, recall, and F1 score.
+Kaggle Submission: Generate separate prediction files and evaluate their public leaderboard performance.
