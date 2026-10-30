@@ -1,32 +1,104 @@
-# Disaster Tweet Classification using NLP and Deep Learning
+# Disaster Tweet Classification Using Natural Language Processing
 
-## Project Overview
+## 1. Project Overview
 
-This project classifies tweets into two categories:
+This project focuses on classifying tweets into two categories: disaster-related and non-disaster-related tweets using Natural Language Processing (NLP).
 
-- **Disaster (1):** Tweets referring to real disaster events.
-- **Not Disaster (0):** Tweets that do not refer to real disaster events.
+Two independent approaches are implemented and evaluated:
 
-The project compares a traditional machine learning approach using TF-IDF and Logistic Regression with a transformer-based approach using DistilBERT.
+1. **Traditional Machine Learning:** TF-IDF Vectorization with Logistic Regression.
+2. **Transformer-Based Deep Learning:** Fine-tuning a pretrained DistilBERT model.
 
-## Models Implemented
+The objective is to compare traditional text classification techniques with contextual language representation models.
 
-### 1. TF-IDF + Logistic Regression
+## 2. Problem Statement
 
-- Converts text into numerical features using Term Frequency–Inverse Document Frequency (TF-IDF).
-- Uses word unigrams and bigrams.
-- Trains a Logistic Regression classifier.
-- Serves as a computationally efficient and interpretable baseline.
+Social media platforms contain large amounts of information during emergencies. However, not every tweet containing disaster-related words refers to an actual disaster.
 
-### 2. DistilBERT
+This project aims to develop text classification models that distinguish genuine disaster-related tweets from ordinary or figurative usage.
 
-- Uses the pretrained `distilbert/distilbert-base-uncased` model.
-- Fine-tunes the model for binary tweet classification.
-- Uses a maximum sequence length of 128 tokens.
-- Trains for three epochs with a learning rate of `2e-5`.
-- Evaluates performance using accuracy, precision, recall, and F1 score.
+## 3. Dataset Description
 
-## Experimental Results
+The project uses the Kaggle Natural Language Processing with Disaster Tweets dataset.
+
+| Dataset | Records |
+|---|---:|
+| Training dataset | 7,613 |
+| Testing dataset | 3,263 |
+
+**Target classes:**
+- `0` – Not Disaster
+- `1` – Disaster
+
+The training data contains labeled tweets, while the test data is used to generate Kaggle predictions.
+
+## 4. Approach 1: Traditional Machine Learning
+
+**TF-IDF + Logistic Regression**
+
+This approach uses traditional text representation and machine learning classification.
+
+### Workflow
+
+1. Load the training and testing datasets.
+2. Clean the tweet text by removing URLs, mentions, and unnecessary whitespace.
+3. Split the training data into 80% training and 20% validation sets using stratification.
+4. Convert text into numerical features using TF-IDF.
+5. Train a Logistic Regression classifier.
+6. Evaluate the model using classification metrics and a confusion matrix.
+7. Generate predictions for the Kaggle test dataset.
+
+### Techniques Used
+
+- Text preprocessing
+- TF-IDF Vectorization
+- Unigrams and Bigrams
+- Logistic Regression
+- Classification Report
+- Confusion Matrix
+
+### Notebook
+
+`notebooks/disaster_tweet_baseline.ipynb`
+
+## 5. Approach 2: Transformer-Based Deep Learning
+
+**DistilBERT**
+
+This approach uses a pretrained transformer model to capture contextual information in tweets.
+
+### Workflow
+
+1. Load the training and testing datasets.
+2. Use the original tweet text as model input.
+3. Split the training data into 80% training and 20% validation sets using stratification.
+4. Load the pretrained DistilBERT tokenizer.
+5. Tokenize tweets with a maximum sequence length of 128.
+6. Fine-tune the pretrained DistilBERT model for binary classification.
+7. Evaluate the model using accuracy, precision, recall, and F1 score.
+8. Generate predictions for the Kaggle test dataset.
+
+### Model Configuration
+
+| Parameter | Value |
+|---|---|
+| Pretrained model | distilbert-base-uncased |
+| Epochs | 3 |
+| Learning rate | 0.00002 |
+| Training batch size | 16 |
+| Evaluation batch size | 32 |
+| Maximum token length | 128 |
+| Weight decay | 0.01 |
+| Optimizer | AdamW (Trainer default) |
+| Hardware | GPU (Google Colab T4) |
+
+### Notebook
+
+`notebooks/bert_implementation.ipynb`
+
+## 6. Experimental Results
+
+Both approaches were evaluated independently using a stratified 80:20 validation split.
 
 | Model | Validation F1 | Kaggle Public Score |
 |---|---:|---:|
@@ -34,129 +106,95 @@ The project compares a traditional machine learning approach using TF-IDF and Lo
 | Tuned TF-IDF + Logistic Regression | 0.7793 | 0.80447 |
 | DistilBERT | 0.8129 | 0.83266 |
 
-## Model Comparison
+**Best-performing approach:** DistilBERT.
 
-The following graph compares the public Kaggle F1 scores of the
-baseline TF-IDF model, tuned TF-IDF model, and DistilBERT.
+DistilBERT achieved a Kaggle public F1 score of 0.83266, outperforming the tuned TF-IDF approach in these experiments.
 
-![Model Comparison](images/model_comparison.png)
+*Note: Validation F1 and Kaggle public leaderboard scores are measured on different evaluation sets and are reported separately.*
 
-**Best model:** DistilBERT, with a Kaggle public score of **0.83266**.
+## 7. Model Comparison
 
-DistilBERT improved the Kaggle score by 0.02819 compared with the best TF-IDF submission.
+| Feature | TF-IDF + Logistic Regression | DistilBERT |
+|---|---|---|
+| Approach | Traditional ML | Transformer-based deep learning |
+| Text representation | Statistical word weights | Contextual representations |
+| Feature extraction | TF-IDF | Pretrained tokenizer and transformer |
+| Context understanding | Limited | Context-sensitive |
+| Computational requirements | Low | Higher |
+| Interpretability | Relatively high | More limited |
+| Kaggle public score | 0.80447 | 0.83266 |
 
-*Note: Validation metrics and Kaggle public scores come from different evaluation sets and should be interpreted separately.*
-
-## Model Evaluation
-
-### Confusion Matrix
-
-The confusion matrix shows how effectively DistilBERT distinguishes real disaster tweets from non-disaster tweets on the validation set.
-
-![DistilBERT Confusion Matrix](images/confusion_matrix.png)
-
-### Classification Report
-
-The classification report evaluates the model using precision, recall, and F1 score for both classes.
-
-The model achieved a validation F1 score of **0.8129** and a Kaggle public score of **0.83266**.
-
-The validation results are used to assess model performance before submission, while the Kaggle score measures performance on the competition's evaluation data.
-
-## Technologies Used
+## 8. Technologies Used
 
 - Python
-- Pandas and NumPy
+- Pandas
+- NumPy
 - Scikit-learn
-- Hugging Face Transformers and Datasets
+- NLTK
+- Matplotlib
+- Seaborn
 - PyTorch
+- Hugging Face Transformers
+- Hugging Face Datasets
 - Google Colab
 - Kaggle
 
-## Repository Structure
+## 9. Repository Structure
 
 ```text
 Disaster-Tweet-Classification/
+│
 ├── data/
+│
 ├── images/
-├── models/
+│   ├── model_comparison.png
+│   └── confusion_matrix.png
+│
 ├── notebooks/
+│   ├── disaster_tweet_baseline.ipynb
 │   └── bert_implementation.ipynb
+│
+├── models/
+│
 ├── outputs/
+│   ├── classification_report.txt
+│   └── classification_report.csv
+│
 ├── src/
+│
 ├── .gitignore
 ├── README.md
-└── requirments.txt
+└── requirements.txt
 ```
 
-The repository may contain additional notebooks and source files as the project develops.
+## 10. How to Run the Project
 
-## How to Run
+1. Clone the repository.
+2. Install the required dependencies using `pip install -r requirements.txt`.
+3. Download the competition datasets from Kaggle.
+4. Place the CSV files in the appropriate data directory or update the notebook file paths.
+5. Open the required notebook in Google Colab or Jupyter Notebook.
+6. Execute the cells sequentially.
+7. Evaluate the model and generate Kaggle submission files.
 
-1. Open the notebook in `notebooks/`.
-2. Install the required Python libraries.
-3. Load the Kaggle competition datasets.
-4. Run the notebook cells in order.
-5. Evaluate the model on the validation split.
-6. Generate a submission CSV for Kaggle.
+For DistilBERT, enable GPU acceleration in Google Colab for faster training.
 
-## Dataset
+## 11. Conclusion
 
-The project uses the [Natural Language Processing with Disaster Tweets](https://www.kaggle.com/competitions/nlp-getting-started) competition dataset.
+This project demonstrates two independent approaches to disaster tweet classification.
 
-The training dataset contains labeled tweets, while the test dataset is used to generate predictions for submission.
+The TF-IDF and Logistic Regression approach provides an efficient traditional machine learning baseline, while DistilBERT uses contextual language representations through transformer-based deep learning.
 
-## Key Learning Outcomes
+Based on the experimental results, DistilBERT achieved the highest F1 score among the implemented approaches.
 
-- Text preprocessing and feature extraction.
-- TF-IDF vectorization and Logistic Regression.
-- Transformer-based text classification.
-- Fine-tuning a pretrained language model.
-- Evaluating classification models using F1 score.
-- Comparing traditional machine learning with deep learning.
+## 12. Future Enhancements
 
-## Future Improvements
+- Experiment with additional transformer architectures.
+- Perform systematic hyperparameter optimization.
+- Analyze false positives and false negatives.
+- Improve model generalization.
+- Explore ensemble classification techniques.
 
-- Experiment with different learning rates and epoch counts.
-- Analyze misclassified tweets using a confusion matrix.
-- Compare DistilBERT with other transformer models.
-- Improve reproducibility and document the experimental setup.
+## Dataset and Competition
 
-## Project Architecture
-
-The project compares a traditional machine learning pipeline with a transformer-based NLP pipeline for disaster tweet classification.
-
-Approach 1: Traditional Machine Learning
-```mermaid
-flowchart TD
-    A["Disaster Tweets Dataset"] --> B["Text Preprocessing"]
-    B --> C["TF-IDF Vectorization"]
-    C --> D["Logistic Regression"]
-    D --> E["Binary Classification"]
-    E --> F["Prediction: 0 or 1"]
-```
-
-Approach 2: Transformer-Based Deep Learning
-```mermaid
-flowchart TD
-    A["Disaster Tweets Dataset"] --> B["Original Tweet Text"]
-    B --> C["DistilBERT Tokenizer"]
-    C --> D["Pretrained DistilBERT"]
-    D --> E["Fine-Tuning"]
-    E --> F["Binary Classification"]
-    F --> G["Prediction: 0 or 1"]
-```
-
-### Workflow Explanation
-
-1. Dataset Preparation: Load the Kaggle disaster tweet dataset.
-
-2. Traditional ML Pipeline: Apply text preprocessing, TF-IDF vectorization, and Logistic Regression.
-
-3. Transformer Pipeline: Tokenize the original tweets and fine-tune pretrained DistilBERT.
-
-4. Independent Predictions: Each model generates its own binary classification predictions.
-
-5. Comparative Evaluation: Compare both approaches using accuracy, precision, recall, and F1 score.
-
-6. Kaggle Submission: Generate separate prediction files and evaluate their public leaderboard performance.
+[Kaggle – Natural Language Processing with Disaster Tweets](https://www.kaggle.com/competitions/nlp-getting-started)
