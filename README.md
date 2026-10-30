@@ -149,14 +149,14 @@ flowchart TD
 
 ### Workflow Explanation
 
-Dataset Preparation: Load the Kaggle disaster tweet dataset.
+1. Dataset Preparation: Load the Kaggle disaster tweet dataset.
 
-Traditional ML Pipeline: Apply text preprocessing, TF-IDF vectorization, and Logistic Regression.
+2. Traditional ML Pipeline: Apply text preprocessing, TF-IDF vectorization, and Logistic Regression.
 
-Transformer Pipeline: Tokenize the original tweets and fine-tune pretrained DistilBERT.
+3. Transformer Pipeline: Tokenize the original tweets and fine-tune pretrained DistilBERT.
 
-Independent Predictions: Each model generates its own binary classification predictions.
+4. Independent Predictions: Each model generates its own binary classification predictions.
 
-Comparative Evaluation: Compare both approaches using accuracy, precision, recall, and F1 score.
+5. Comparative Evaluation: Compare both approaches using accuracy, precision, recall, and F1 score.
 
-Kaggle Submission: Generate separate prediction files and evaluate their public leaderboard performance.
+6. Kaggle Submission: Generate separate prediction files and evaluate their public leaderboard performance.
